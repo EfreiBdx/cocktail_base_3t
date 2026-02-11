@@ -1,0 +1,38 @@
+name: 02-4 - Deploy - ZAP Scan
+
+on:
+  workflow_call
+
+
+jobs:
+  Back_Zap_Scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ZAP Scan
+        uses: zaproxy/action-api-scan@v0.9.0
+        with:          
+          format: openapi
+          target: 'http://monocanary.demo.clic-boum-paf.com:12000'
+          fail_action: true
+          artifact_name: 'back-zap-scan'
+          issue_title: 'ZAP Back Scan Report'
+
+  front_zap_scan:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:          
+          target: 'http://monocanary.demo.clic-boum-paf.com'
+          fail_action: true
+          artifact_name: 'front-zap-scan'
+          issue_title: 'ZAP Front Scan Report'

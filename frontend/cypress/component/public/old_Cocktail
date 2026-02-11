@@ -1,0 +1,49 @@
+import React from 'react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { Cocktail } from '@pages/Public'
+
+describe('Cocktail Page Component', () => {
+  const mockCocktail = {
+    id: '1',
+    nom: 'Mojito',
+    description: 'Un délicieux cocktail rafraîchissant.',
+    recette: 'Mélanger le rhum, le sucre, le jus de citron vert et la menthe. Ajouter de l\'eau gazeuse et de la glace.',
+  }
+
+  beforeEach(() => {
+    cy.intercept('GET', `**/cocktails/${mockCocktail.id}`, {
+      statusCode: 200,
+      body: { data: mockCocktail }
+    }).as('getOneCocktail')
+  })
+
+  it('Should display Cocktail inofrmation', () => {
+    cy.mount(
+      <MemoryRouter initialEntries={[`/cocktail/${mockCocktail.id}`]}> {/* Important: Set initial route */}
+        <Routes>
+          <Route path="/cocktail/:cid" element={<Cocktail />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    cy.wait('@getOneCocktail').then((interception) => {
+      expect(interception.request.url).to.include(`/cocktails/${mockCocktail.id}`)
+    })
+
+    cy.get('img').should('have.attr', 'src').and('include', `https://picsum.photos/1200/800?random=${mockCocktail.id}`)
+    cy.get('img').should('have.attr', 'alt', mockCocktail.nom)
+
+    cy.contains(mockCocktail.nom).should('be.visible')
+    cy.contains(mockCocktail.description).should('be.visible')
+    cy.contains(mockCocktail.recette).should('be.visible')
+
+    // cy.get('.service').then(($div) => { // On récupère le conteneur principal
+    //   const cocktail = $div.get(0).__reactFiber$?.child?.memoizedProps?.children; // Accès à la fibre React (attention, c'est fragile !)
+    //   expect(cocktail).to.not.be.undefined; // Vérifie que le state n'est pas undefined
+    //   expect(cocktail.nom).to.equal(mockCocktail.nom); // Vérifie une propriété du state
+    //   expect(cocktail.description).to.equal(mockCocktail.description);
+    //   expect(cocktail.recette).to.equal(mockCocktail.recette);
+    //   // ... d'autres assertions sur le state
+    // });
+  })
+})

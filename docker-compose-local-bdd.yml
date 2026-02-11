@@ -1,0 +1,25 @@
+services:
+  cktefrei_bdd:
+    container_name: cktefrei_bdd
+    image: mariadb:12.1.2
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: toor
+      MARIADB_DATABASE: bddname
+      MARIADB_USER: roger
+      MARIADB_PASSWORD: regor
+    healthcheck:
+      test: ['CMD', '/usr/local/bin/healthcheck.sh', '--innodb_initialized']
+      start_period: 5s
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  cktefrei_adminer:
+    container_name: cktefrei_adminer
+    image: adminer
+    ports:
+      - 8080:8080

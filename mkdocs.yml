@@ -1,0 +1,121 @@
+site_name: Cocktail ClicBoumPaf - Documentation
+site_description: Documentation complète du projet DevSecOps Cocktail
+site_author: EfreiBdx
+repo_url: https://github.com/EfreiBdx/cocktail_base_3t
+repo_name: EfreiBdx/cocktail_base_3t
+
+theme:
+  name: material
+  language: fr
+  palette:
+  # Palette toggle for light mode
+  - scheme: default
+    primary: indigo
+    accent: indigo
+    toggle:
+      icon: material/brightness-7
+      name: Mode sombre
+  # Palette toggle for dark mode
+  - scheme: slate
+    primary: indigo
+    accent: indigo
+    toggle:
+      icon: material/brightness-4
+      name: Mode clair
+  features:
+  - navigation.tabs
+  - navigation.sections
+  - navigation.top
+  - navigation.footer
+  - navigation.indexes
+  - search.suggest
+  - search.highlight
+  - content.tabs.link
+  - content.code.annotation
+  - content.code.copy
+  - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+- search:
+    lang: fr
+
+markdown_extensions:
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format ""
+- pymdownx.tabbed:
+    alternate_style: true
+- admonition
+- pymdownx.details
+- pymdownx.mark
+- attr_list
+- md_in_html
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji ""
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg ""
+- tables
+- toc:
+    permalink: true
+
+nav:
+- Accueil: index.md
+- Guide de démarrage:
+  - Introduction: getting-started/introduction.md
+  - Prérequis: getting-started/prerequisites.md
+  - Installation locale: getting-started/installation.md
+  - Configuration: getting-started/configuration.md
+- Architecture:
+  - Vue d'ensemble: architecture/overview.md
+  - Backend: architecture/backend.md
+  - Frontend: architecture/frontend.md
+  - Base de données: architecture/database.md
+  - Docker: architecture/docker.md
+- CI/CD & DevSecOps:
+  - Vue d'ensemble: cicd/overview.md
+  - Workflows: cicd/workflows.md
+  - Integration (Phase 01): cicd/integration.md
+  - Canary (Phase 02): cicd/canary.md
+  - Tests & Qualité: cicd/testing.md
+  - Sécurité: cicd/security.md
+- Infrastructure Azure:
+  - Déploiement ARM: infrastructure/arm-deployment.md
+  - Configuration réseau: infrastructure/network.md
+  - Gestion DNS: infrastructure/dns.md
+  - OIDC & Identités: infrastructure/oidc.md
+- Développement:
+  - Backend API: development/backend-api.md
+  - Frontend React: development/frontend-react.md
+  - Tests unitaires: development/unit-tests.md
+  - Tests E2E Cypress: development/e2e-tests.md
+- Déploiement:
+  - Environnements: deployment/environments.md
+  - Docker & Compose: deployment/docker.md
+  - Azure VM: deployment/azure-vm.md
+  - Canary Release: deployment/canary.md
+- Sécurité:
+  - Analyse Snyk: security/snyk.md
+  - Scan Trivy: security/trivy.md
+  - OWASP ZAP: security/zap.md
+  - Bonnes pratiques: security/best-practices.md
+- Troubleshooting:
+  - Problèmes courants: troubleshooting/common-issues.md
+  - Logs & Debug: troubleshooting/debugging.md
+  - FAQ: troubleshooting/faq.md
+- Contribuer: contributing.md
+
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/EfreiBdx/cocktail_base_3t
+  version:
+    provider: mike
